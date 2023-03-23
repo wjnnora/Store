@@ -7,5 +7,7 @@ namespace Store.Product.Api.Model.Context
         public ProductContext() { }
 
         public ProductContext(DbContextOptions<ProductContext> options) : base (options) { }
+
+        public DbSet<Product> Products { get; set; }
     }
 }
