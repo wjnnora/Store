@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Store.Product.Api.AutoMapper;
 using Store.Product.Api.Entity.Context;
-
+using Store.Product.Api.Repository;
+using Store.Product.Api.Repository.Contract;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,9 @@ builder.Services.AddDbContext<ProductContext>(opt => opt.UseSqlServer(connection
 var mapper = Configuration.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// Dependency Injection
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
 
