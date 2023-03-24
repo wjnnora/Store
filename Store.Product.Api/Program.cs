@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Store.Product.Api.AutoMapper;
 using Store.Product.Api.Entity.Context;
 
 
@@ -14,6 +15,11 @@ builder.Services.AddSwaggerGen();
 // Connection String configuration
 var connectionString = builder.Configuration["SQLServerConnection:SQLServerConnectionString"];
 builder.Services.AddDbContext<ProductContext>(opt => opt.UseSqlServer(connectionString));
+
+// AutoMapper configuration
+var mapper = Configuration.RegisterMaps().CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
