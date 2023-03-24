@@ -1,13 +1,11 @@
-﻿using Store.Product.Api.Model;
-
-namespace Store.Product.Api.Repository.Contract
+﻿namespace Store.Product.Api.Repository.Contract
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<ProductDTO>> FindAllAsync();
-        Task<ProductDTO> FindByIdAsync(long id);
-        Task<ProductDTO> CreateAsync(ProductDTO model);
-        Task<ProductDTO> UpdateAsync(ProductDTO model);
-        Task<bool> DeleteAsync(long id);
+        Task<IEnumerable<Entity.Product>> FindAllAsync();
+        Task<Entity.Product> FindByIdAsync(long id);
+        Task<Entity.Product> CreateAsync(Entity.Product product);
+        Task<Entity.Product> UpdateAsync(Entity.Product product);
+        Task<bool> DeleteAsync(Entity.Product product);
     }
 }

@@ -1,72 +1,49 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Store.Product.Api.Entity.Context;
-using Store.Product.Api.Model;
 using Store.Product.Api.Repository.Contract;
 
 namespace Store.Product.Api.Repository
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly ProductContext _context;
-        private readonly IMapper _mapper;
+        private readonly ProductContext _context;        
 
-        public ProductRepository(ProductContext context, IMapper mapper)
+        public ProductRepository(ProductContext context)
         {
-            _context = context;
-            _mapper = mapper;
+            _context = context;            
         }
 
-        public async Task<ProductDTO> CreateAsync(ProductDTO model)
+        public async Task<Entity.Product> CreateAsync(Entity.Product product)
         {
-            var product = _mapper.Map<Entity.Product>(model);
-
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
-
-            return _mapper.Map<ProductDTO>(product);
+            return product;
         }
 
-        public async Task<bool> DeleteAsync(long id)
+        public async Task<bool> DeleteAsync(Entity.Product product)
         {
-            try 
-            {
-                var productDTO = await FindByIdAsync(id);
+            _context.Products.Remove(product);
 
-                var product = _mapper.Map<Entity.Product>(productDTO);
-
-                if (product is null)
-                    throw new Exception("Product not found.");
-
-                _context.Products.Remove(product);
-                return await _context.SaveChangesAsync() > 0;
-            }
-            catch 
-            {
-                return false;
-            }
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<IEnumerable<ProductDTO>> FindAllAsync()
+        public async Task<IEnumerable<Entity.Product>> FindAllAsync()
         {
-            var products = await _context.Products.ToListAsync();
-            return _mapper.Map<IEnumerable<ProductDTO>>(products);
+            return await _context.Products.ToListAsync();            
         }
 
-        public async Task<ProductDTO> FindByIdAsync(long id)
+        public async Task<Entity.Product> FindByIdAsync(long id)
         {
-            var product = await _context.Products.FindAsync(id);
-            return _mapper.Map<ProductDTO>(product);
+            return await _context.Products.FindAsync(id);            
         }
 
-        public async Task<ProductDTO> UpdateAsync(ProductDTO model)
+        public async Task<Entity.Product> UpdateAsync(Entity.Product product)
         {
-            var product = _mapper.Map<Entity.Product>(model);
-
+            _context.ChangeTracker.Clear();
             _context.Products.Update(product);
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<ProductDTO>(product) ;
+            return product;
         }
     }
 }
