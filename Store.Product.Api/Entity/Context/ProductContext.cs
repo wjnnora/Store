@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Store.Product.Api.Model.Context
+namespace Store.Product.Api.Entity.Context
 {
     public class ProductContext : DbContext
     {

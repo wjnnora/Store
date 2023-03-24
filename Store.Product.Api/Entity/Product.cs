@@ -1,8 +1,8 @@
-﻿using Store.Product.Api.Model.Base;
+﻿using Store.Product.Api.Entity.Base;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Store.Product.Api.Model
+namespace Store.Product.Api.Entity
 {
     [Table("product")]
     public class Product : BaseEntity
