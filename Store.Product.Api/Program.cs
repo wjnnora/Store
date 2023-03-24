@@ -3,6 +3,8 @@ using Store.Product.Api.AutoMapper;
 using Store.Product.Api.Entity.Context;
 using Store.Product.Api.Repository;
 using Store.Product.Api.Repository.Contract;
+using Store.Product.Api.Service;
+using Store.Product.Api.Service.Contract;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +24,11 @@ var mapper = Configuration.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-// Dependency Injection
+// REPOSITORY - Dependency Injection
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+// SERVICE - Dependency Injection
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 
